@@ -5,6 +5,7 @@ import ImageIO
 
 public final class VisionOCRService: Sendable {
     /// Performs on-device text recognition on the given image using Apple Vision framework.
+    /// Dispatches OCR processing to a detached background task to prevent blocking the caller thread.
     /// - Parameter image: The `UIImage` containing receipt or bank transfer confirmation text
     /// - Returns: Extracted multi-line raw text string
     public static func recognizeText(from image: UIImage) async throws -> String {
@@ -16,37 +17,20 @@ public final class VisionOCRService: Sendable {
             )
         }
 
-        return try await withCheckedThrowingContinuation { continuation in
-            let request = VNRecognizeTextRequest { request, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                    return
-                }
+        let orientation = CGImagePropertyOrientation(image.imageOrientation)
 
-                guard let observations = request.results as? [VNRecognizedTextObservation] else {
-                    continuation.resume(returning: "")
-                    return
-                }
-
-                let recognizedStrings = observations.compactMap { observation in
-                    observation.topCandidates(1).first?.string
-                }
-
-                continuation.resume(returning: recognizedStrings.joined(separator: "\n"))
-            }
-
+        return try await Task.detached(priority: .userInitiated) {
+            let request = VNRecognizeTextRequest()
             request.recognitionLevel = .accurate
             request.recognitionLanguages = ["vi-VN", "en-US"]
             request.usesLanguageCorrection = true
 
-            let orientation = CGImagePropertyOrientation(image.imageOrientation)
             let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
-            do {
-                try handler.perform([request])
-            } catch {
-                continuation.resume(throwing: error)
-            }
-        }
+            try handler.perform([request])
+
+            let observations = request.results ?? []
+            return observations.compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
+        }.value
     }
 
     private static func extractCGImage(from image: UIImage) -> CGImage? {

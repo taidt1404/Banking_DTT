@@ -55,9 +55,7 @@ public final class BillStorageManager: Sendable {
     /// - Parameter relativePath: The relative path stored with the transaction
     /// - Returns: The loaded `UIImage`, or `nil` if not found or path is invalid
     public func loadBillImage(relativePath: String) -> UIImage? {
-        guard !relativePath.contains("..") else { return nil }
-        let cleanPath = relativePath.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        let fileURL = baseDirectory.appendingPathComponent(cleanPath)
+        guard let fileURL = validatedFileURL(for: relativePath) else { return nil }
         guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
         return UIImage(contentsOfFile: fileURL.path)
     }
@@ -65,9 +63,16 @@ public final class BillStorageManager: Sendable {
     /// Deletes a bill image at the specified relative path
     /// - Parameter relativePath: The relative path stored with the transaction
     public func deleteBillImage(relativePath: String) {
-        guard !relativePath.contains("..") else { return }
-        let cleanPath = relativePath.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        let fileURL = baseDirectory.appendingPathComponent(cleanPath)
+        guard let fileURL = validatedFileURL(for: relativePath) else { return }
         try? FileManager.default.removeItem(at: fileURL)
+    }
+
+    /// Validates and resolves the relative path to ensure it stays strictly within `Bills/` subfolder,
+    /// preventing directory traversal (`..`) and accidental base directory deletion on empty/root paths.
+    private func validatedFileURL(for relativePath: String) -> URL? {
+        guard !relativePath.isEmpty, !relativePath.contains("..") else { return nil }
+        let cleanPath = relativePath.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        guard cleanPath.hasPrefix("Bills/"), cleanPath.count > "Bills/".count else { return nil }
+        return baseDirectory.appendingPathComponent(cleanPath)
     }
 }
