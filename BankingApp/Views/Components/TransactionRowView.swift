@@ -30,7 +30,7 @@ public struct TransactionRowView: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("\(transaction.type == .expense ? "-" : "+")\(Int(transaction.amount)) đ")
+                    Text(Self.formatAmount(transaction.amount, type: transaction.type))
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundStyle(transaction.type == .expense ? .red : .green)
@@ -52,6 +52,12 @@ public struct TransactionRowView: View {
             .padding(.vertical, 4)
         }
         .buttonStyle(.plain)
+    }
+
+    /// Formats transaction amount with sign prefix and standard Vietnamese currency grouping
+    public static func formatAmount(_ amount: Double, type: TransactionType) -> String {
+        let sign = type == .expense ? "-" : "+"
+        return "\(sign)\(CurrencyFormatter.format(amount))"
     }
 }
 

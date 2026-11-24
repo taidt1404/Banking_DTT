@@ -39,11 +39,7 @@ public struct SummaryCardView: View {
     }
 
     public static func formatCurrency(_ value: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "VND"
-        formatter.maximumFractionDigits = 0
-        return formatter.string(from: NSNumber(value: value)) ?? "\(Int(value)) đ"
+        CurrencyFormatter.format(value)
     }
 }
 

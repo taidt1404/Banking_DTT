@@ -55,9 +55,8 @@ public struct SaveBillIntent: AppIntent {
         context.insert(transaction)
         try context.save()
 
-        let formattedAmount = String(format: "%.0f đ", amount)
-        let targetName = parsed.recipientName ?? "giao dịch"
-        return .result(dialog: "Đã lưu bill \(formattedAmount) (\(targetName))")
+        let dialog = Self.formatSuccessDialog(amount: amount, recipientName: parsed.recipientName)
+        return .result(dialog: "\(dialog)")
     }
 
     /// Helper to format the completion dialog message for display or logging

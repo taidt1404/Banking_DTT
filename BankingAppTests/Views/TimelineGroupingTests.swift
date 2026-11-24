@@ -101,10 +101,29 @@ final class TimelineGroupingTests: XCTestCase {
         XCTAssertFalse(pastStr.hasPrefix("Hôm qua"))
     }
 
-    // Test SummaryCardView currency formatting
+    // Test SummaryCardView and CurrencyFormatter currency formatting with grouping
     func testSummaryCardViewCurrencyFormatting() {
         let formatted = SummaryCardView.formatCurrency(150000)
         XCTAssertTrue(formatted.contains("150") || formatted.contains("₫") || formatted.contains("VND") || formatted.contains("đ"))
+    }
+
+    func testCurrencyFormatterGrouping() {
+        let formatted = CurrencyFormatter.format(15000000)
+        XCTAssertTrue(formatted.contains("15.000.000") || formatted.contains("15,000,000"))
+        XCTAssertTrue(formatted.contains("₫") || formatted.contains("đ") || formatted.contains("VND"))
+
+        let summaryFormatted = SummaryCardView.formatCurrency(15000000)
+        XCTAssertEqual(summaryFormatted, formatted, "SummaryCardView and CurrencyFormatter must provide consistent formatting")
+    }
+
+    func testTransactionRowViewAmountFormatting() {
+        let expenseStr = TransactionRowView.formatAmount(15000000, type: .expense)
+        XCTAssertTrue(expenseStr.hasPrefix("-"))
+        XCTAssertTrue(expenseStr.contains("15.000.000") || expenseStr.contains("15,000,000"))
+
+        let incomeStr = TransactionRowView.formatAmount(5000000, type: .income)
+        XCTAssertTrue(incomeStr.hasPrefix("+"))
+        XCTAssertTrue(incomeStr.contains("5.000.000") || incomeStr.contains("5,000,000"))
     }
 
     // Test SwiftData persistence integration with grouping
