@@ -12,8 +12,8 @@ public struct BankingShortcutsProvider: AppShortcutsProvider {
                 "Lưu bill với \(.applicationName)",
                 "Quét bill \(.applicationName)"
             ],
-            shortTitle: shortcutTitle,
-            systemImageName: shortcutSystemImage
+            shortTitle: "Lưu Bill Ngân Hàng",
+            systemImageName: "doc.text.viewfinder"
         )
     }
 }

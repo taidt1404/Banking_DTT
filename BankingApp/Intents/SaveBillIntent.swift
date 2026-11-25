@@ -9,8 +9,7 @@ public struct SaveBillIntent: AppIntent {
 
     @Parameter(
         title: "Ảnh chụp màn hình",
-        description: "Ảnh chụp bill chuyển khoản cần lưu",
-        supportedTypeIdentifiers: ["public.image"]
+        description: "Ảnh chụp bill chuyển khoản cần lưu"
     )
     public var screenshot: IntentFile?
 
