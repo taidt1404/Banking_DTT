@@ -1,0 +1,12 @@
+# Superpowers scratch / SDD workspaces
+.superpowers/
+
+# macOS & Xcode
+.DS_Store
+*.xcuserstate
+*.xcuserdata/
+DerivedData/
+.build/
+*.ipa
+*.dSYM.zip
+*.dSYM
