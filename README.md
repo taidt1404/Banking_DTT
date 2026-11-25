@@ -18,12 +18,16 @@
 - `BankingAppTests/` — Bộ Unit Tests cho từng module
 - `docs/superpowers/` — Tài liệu thiết kế kỹ thuật (Design Spec) và kế hoạch triển khai (Implementation Plan)
 
-## Cách tải file `.ipa` và cài lên iPhone từ Windows (Không cần máy Mac)
-Repo đã cấu hình sẵn **XcodeGen (`project.yml`)** và **GitHub Actions (`.github/workflows/build-ipa.yml`)** để tự động build & kiểm thử trên máy chủ macOS:
-1. Vào tab **Actions** trên GitHub repo → chọn lần chạy mới nhất của workflow **Build & Test iOS IPA** → kéo xuống mục **Artifacts** và tải về `BankingDTT-unsigned-ipa` (giải nén sẽ được file `BankingDTT-unsigned.ipa`).
-2. Trên Windows, cài đặt **Sideloadly** hoặc **SideStore / AltStore** (cài kèm iTunes & iCloud bản tải từ apple.com, không dùng bản Microsoft Store).
-3. Cắm cáp iPhone vào máy tính Windows → kéo file `BankingDTT-unsigned.ipa` vào phần mềm → nhập Apple ID cá nhân để ký và cài lên iPhone.
-4. Trên iPhone: vào **Cài đặt → Cài đặt chung → Quản lý VPN & Thiết bị** → bấm **Tin cậy** Apple ID của bạn.
+## Cách cài trực tiếp trên iPhone bằng SideStore (Không cần máy tính sau lần đầu)
+Repo tự động xuất file `BankingDTT-unsigned.ipa` tại mục **Releases** sau mỗi lần build:
+1. **Cài SideStore lần đầu từ Windows (1 lần duy nhất):**
+   - Trên Windows: cài **iTunes** (bản tải trực tiếp từ apple.com, không dùng bản Microsoft Store) và tải công cụ **iloader** từ trang chủ [docs.sidestore.io](https://docs.sidestore.io).
+   - Trên iPhone: tải **LocalDevVPN** từ App Store, mở lên và bấm **Connect**.
+   - Cắm cáp iPhone vào Windows → mở **iloader**, đăng nhập Apple ID → chọn **Install SideStore**.
+   - Trên iPhone: vào **Cài đặt → Cài đặt chung → Quản lý VPN & Thiết bị → Tin cậy** Apple ID, bật **Chế độ nhà phát triển (Developer Mode)** trong *Quyền riêng tư & Bảo mật*, rồi mở SideStore bấm làm mới (`7 DAYS`) lần đầu khi đang bật LocalDevVPN + Wi-Fi.
+2. **Tải và cài `BankingDTT` trực tiếp ngay trên iPhone:**
+   - Mở Safari trên iPhone vào link tải trực tiếp: `https://github.com/taidt1404/Banking_DTT/releases/latest/download/BankingDTT-unsigned.ipa`
+   - Sau khi tải về mục **Tệp (Files)**, mở **SideStore** (đảm bảo đã bật **LocalDevVPN** + **Wi-Fi**) → tab **My Apps** → bấm dấu **`+`** → chọn file `BankingDTT-unsigned.ipa` vừa tải để cài đặt!
 
 ## Cách cài đặt Phím tắt Gõ Mặt Lưng (Back Tap)
 1. Mở ứng dụng **Phím tắt (Shortcuts)** trên iPhone → tạo Phím tắt mới (ví dụ: `"Chụp & Lưu Bill"`) gồm 2 bước:

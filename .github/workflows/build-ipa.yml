@@ -5,6 +5,9 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-and-test:
     name: Build, Test & Package Unsigned IPA
@@ -96,3 +99,22 @@ jobs:
           name: BankingDTT-unsigned-ipa
           path: build/BankingDTT-unsigned.ipa
           retention-days: 30
+
+      - name: Publish Unsigned IPA to Latest Release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="latest"
+          TITLE="BankingDTT Latest Build"
+          NOTES="Bản build tự động từ commit ${GITHUB_SHA::7}. Tải trực tiếp \`BankingDTT-unsigned.ipa\` trên Safari iPhone và cài bằng SideStore."
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -f "$TAG"
+          git push -f origin "$TAG"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" build/BankingDTT-unsigned.ipa --clobber
+            gh release edit "$TAG" --title "$TITLE" --notes "$NOTES"
+          else
+            gh release create "$TAG" build/BankingDTT-unsigned.ipa --title "$TITLE" --notes "$NOTES"
+          fi
