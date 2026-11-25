@@ -2,7 +2,7 @@ import XCTest
 import SwiftUI
 import SwiftData
 import UIKit
-@testable import BankingApp
+@testable import BankingDTT
 
 final class BillDetailViewTests: XCTestCase {
     var modelContainer: ModelContainer!

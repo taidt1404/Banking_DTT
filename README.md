@@ -18,7 +18,19 @@
 - `BankingAppTests/` — Bộ Unit Tests cho từng module
 - `docs/superpowers/` — Tài liệu thiết kế kỹ thuật (Design Spec) và kế hoạch triển khai (Implementation Plan)
 
-## Cách chạy trên máy Mac (Xcode)
-1. Tạo một project iOS App mới trên Xcode (Interface: **SwiftUI**, Storage: **SwiftData**, Deployment Target: **iOS 17.0+**).
-2. Kéo/thêm toàn bộ thư mục `BankingApp/` vào target chính và `BankingAppTests/` vào target test.
-3. Build & Run trên iPhone thật để cài đặt phím tắt Back Tap theo hướng dẫn trong tab **Cài đặt** của ứng dụng.
+## Cách tải file `.ipa` và cài lên iPhone từ Windows (Không cần máy Mac)
+Repo đã cấu hình sẵn **XcodeGen (`project.yml`)** và **GitHub Actions (`.github/workflows/build-ipa.yml`)** để tự động build & kiểm thử trên máy chủ macOS:
+1. Vào tab **Actions** trên GitHub repo → chọn lần chạy mới nhất của workflow **Build & Test iOS IPA** → kéo xuống mục **Artifacts** và tải về `BankingDTT-unsigned-ipa` (giải nén sẽ được file `BankingDTT-unsigned.ipa`).
+2. Trên Windows, cài đặt **Sideloadly** hoặc **SideStore / AltStore** (cài kèm iTunes & iCloud bản tải từ apple.com, không dùng bản Microsoft Store).
+3. Cắm cáp iPhone vào máy tính Windows → kéo file `BankingDTT-unsigned.ipa` vào phần mềm → nhập Apple ID cá nhân để ký và cài lên iPhone.
+4. Trên iPhone: vào **Cài đặt → Cài đặt chung → Quản lý VPN & Thiết bị** → bấm **Tin cậy** Apple ID của bạn.
+
+## Cách cài đặt Phím tắt Gõ Mặt Lưng (Back Tap)
+1. Mở ứng dụng **Phím tắt (Shortcuts)** trên iPhone → tạo Phím tắt mới (ví dụ: `"Chụp & Lưu Bill"`) gồm 2 bước:
+   - **Chụp ảnh màn hình** (*Take Screenshot*)
+   - **Lưu Bill Ngân Hàng** (chọn từ app `Banking DTT`, truyền đầu vào là ảnh vừa chụp).
+2. Vào **Cài đặt iPhone → Trợ năng → Cảm ứng → Chạm vào mặt lưng → Chạm 2 lần** → chọn phím tắt vừa tạo.
+
+## Cách chạy trực tiếp trên máy Mac (Xcode)
+1. Cài `xcodegen` (`brew install xcodegen`) và chạy `xcodegen generate` tại thư mục gốc để sinh `BankingDTT.xcodeproj`.
+2. Mở `BankingDTT.xcodeproj` bằng Xcode → chọn Apple ID cá nhân ở mục **Signing & Capabilities** → bấm **Run (`Cmd + R`)** lên iPhone.

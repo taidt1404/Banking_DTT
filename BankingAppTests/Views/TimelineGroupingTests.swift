@@ -1,6 +1,6 @@
 import XCTest
 import SwiftData
-@testable import BankingApp
+@testable import BankingDTT
 
 final class TimelineGroupingTests: XCTestCase {
     var modelContainer: ModelContainer!

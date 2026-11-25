@@ -1,5 +1,5 @@
 import XCTest
-@testable import BankingApp
+@testable import BankingDTT
 
 final class TransactionRegexParserTests: XCTestCase {
     func testParseTechcombankExpenseBill() {

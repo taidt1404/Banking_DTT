@@ -7,17 +7,21 @@ public struct SaveBillIntent: AppIntent {
     public static var description = IntentDescription("Tự động quét OCR và lưu bill chuyển khoản vào app chi tiêu")
     public static var openAppWhenRun: Bool = false
 
-    @Parameter(title: "Ảnh chụp màn hình", description: "Ảnh chụp bill chuyển khoản cần lưu")
-    public var screenshot: IntentFile
+    @Parameter(
+        title: "Ảnh chụp màn hình",
+        description: "Ảnh chụp bill chuyển khoản cần lưu",
+        supportedTypeIdentifiers: ["public.image"]
+    )
+    public var screenshot: IntentFile?
 
     public init() {}
 
-    public init(screenshot: IntentFile) {
+    public init(screenshot: IntentFile?) {
         self.screenshot = screenshot
     }
 
-    public func perform() async throws -> some ProvidesDialog {
-        guard let data = screenshot.data, let image = UIImage(data: data) else {
+    public func perform() async throws -> some IntentResult & ProvidesDialog {
+        guard let screenshot = screenshot, let image = UIImage(data: screenshot.data) else {
             return .result(dialog: "Không đọc được dữ liệu ảnh chụp màn hình.")
         }
 

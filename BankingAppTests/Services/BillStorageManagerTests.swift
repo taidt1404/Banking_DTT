@@ -1,6 +1,6 @@
 import XCTest
 import UIKit
-@testable import BankingApp
+@testable import BankingDTT
 
 final class BillStorageManagerTests: XCTestCase {
     func testSaveAndRetrieveBillImage() throws {

@@ -2,7 +2,7 @@ import XCTest
 import UIKit
 import SwiftData
 import AppIntents
-@testable import BankingApp
+@testable import BankingDTT
 
 final class SaveBillIntentTests: XCTestCase {
     var modelContainer: ModelContainer!
@@ -63,8 +63,8 @@ final class SaveBillIntentTests: XCTestCase {
         let shortcuts = BankingShortcutsProvider.appShortcuts
         XCTAssertFalse(shortcuts.isEmpty)
         XCTAssertEqual(shortcuts.count, 1)
-        XCTAssertEqual(String(localized: shortcuts[0].shortTitle), "Lưu Bill Ngân Hàng")
-        XCTAssertEqual(shortcuts[0].systemImageName, "doc.text.viewfinder")
+        XCTAssertEqual(String(localized: BankingShortcutsProvider.shortcutTitle), "Lưu Bill Ngân Hàng")
+        XCTAssertEqual(BankingShortcutsProvider.shortcutSystemImage, "doc.text.viewfinder")
     }
 
     func testSaveBillIntentDialogFormatting() {

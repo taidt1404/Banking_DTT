@@ -17,9 +17,11 @@ public struct BankingApp: App {
         }
     }
 
-    public var sharedModelContainer: ModelContainer = BankingApp.createModelContainer()
+    public let sharedModelContainer: ModelContainer
 
-    public init() {}
+    public init() {
+        self.sharedModelContainer = Self.createModelContainer()
+    }
 
     public init(modelContainer: ModelContainer) {
         self.sharedModelContainer = modelContainer

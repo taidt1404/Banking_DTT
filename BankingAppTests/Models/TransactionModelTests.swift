@@ -1,6 +1,6 @@
 import XCTest
 import SwiftData
-@testable import BankingApp
+@testable import BankingDTT
 
 final class TransactionModelTests: XCTestCase {
     var modelContainer: ModelContainer!

@@ -1,7 +1,7 @@
 import XCTest
 import SwiftData
 import SwiftUI
-@testable import BankingApp
+@testable import BankingDTT
 
 final class ShortcutsSetupGuideViewTests: XCTestCase {
     var inMemoryContainer: ModelContainer!
@@ -82,8 +82,8 @@ final class ShortcutsSetupGuideViewTests: XCTestCase {
     // MARK: - BankingApp & ModelContainer Tests
 
     func testBankingAppCreateModelContainerSchemaRegistration() throws {
-        XCTAssertNotNil(inMemoryContainer)
-        let schema = inMemoryContainer.schema
+        let container = try XCTUnwrap(inMemoryContainer)
+        let schema = container.schema
         let entityNames = schema.entities.map { $0.name }
 
         XCTAssertTrue(entityNames.contains("Transaction"))
