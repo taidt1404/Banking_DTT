@@ -3,6 +3,9 @@ import SwiftData
 import SwiftUI
 @testable import BankingDTT
 
+private typealias Transaction = BankingDTT.Transaction
+private typealias Category = BankingDTT.Category
+
 final class ShortcutsSetupGuideViewTests: XCTestCase {
     var inMemoryContainer: ModelContainer!
     var modelContext: ModelContext!

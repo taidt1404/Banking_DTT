@@ -4,6 +4,9 @@ import SwiftData
 import UIKit
 @testable import BankingDTT
 
+private typealias Transaction = BankingDTT.Transaction
+private typealias Category = BankingDTT.Category
+
 final class BillDetailViewTests: XCTestCase {
     var modelContainer: ModelContainer!
     var modelContext: ModelContext!

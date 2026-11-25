@@ -4,6 +4,9 @@ import SwiftData
 import AppIntents
 @testable import BankingDTT
 
+private typealias Transaction = BankingDTT.Transaction
+private typealias Category = BankingDTT.Category
+
 final class SaveBillIntentTests: XCTestCase {
     var modelContainer: ModelContainer!
     var modelContext: ModelContext!

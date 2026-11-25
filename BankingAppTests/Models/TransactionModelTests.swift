@@ -2,6 +2,9 @@ import XCTest
 import SwiftData
 @testable import BankingDTT
 
+private typealias Transaction = BankingDTT.Transaction
+private typealias Category = BankingDTT.Category
+
 final class TransactionModelTests: XCTestCase {
     var modelContainer: ModelContainer!
     var modelContext: ModelContext!
